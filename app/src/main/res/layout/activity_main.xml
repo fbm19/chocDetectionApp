@@ -40,19 +40,18 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <EditText
+                android:id="@+id/txtPhone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Phone number"/>
             <Button
+                android:id="@+id/butEdit"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:background="@drawable/ic_edit_black_24dp"/>
 
         </LinearLayout>
-        <lecho.lib.hellocharts.view.AbstractChartView
-            android:id="@+id/chart"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+
     </LinearLayout>
 
 
