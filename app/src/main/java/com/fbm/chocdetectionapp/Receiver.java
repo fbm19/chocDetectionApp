@@ -12,6 +12,14 @@ public class Receiver {
 
     }
 
+    @Override
+    public String toString() {
+        return "Receiver{" +
+                "_id=" + _id +
+                ", _number='" + _number + '\'' +
+                ", _sms='" + _sms + '\'' +
+                '}';
+    }
 
     public int get_id() {
         return _id;
@@ -37,7 +45,7 @@ public class Receiver {
         this._sms = _sms;
     }
 
-    public Receiver(int _id, String _number, String _sms) {
+    public Receiver(int _id, String _sms,String _number) {
         this._id = _id;
         this._number = _number;
         this._sms = _sms;

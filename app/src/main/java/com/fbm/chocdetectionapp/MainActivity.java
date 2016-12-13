@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.gc.materialdesign.views.Switch;
 
@@ -13,14 +14,61 @@ import com.gc.materialdesign.views.Switch;
 public class MainActivity extends AppCompatActivity {
     SensorTask sensorTask;
     Switch switchButton;
-    Button butEdit;
+    Button butEdit,butEdidText;
+    EditText txtMsg;
+    EditText txtPhone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        txtMsg= (EditText) findViewById(R.id.txtMsg);
+        butEdidText= (Button) findViewById(R.id.butEdidText);
         switchButton = (Switch) findViewById(R.id.switchView);
+        txtPhone= (EditText) findViewById(R.id.txtPhone);
+         ChangeData( );
+        changeStatus();
+        loadData();
 
+
+    }
+public void ChangeData(){
+    txtMsg= (EditText) findViewById(R.id.txtMsg);
+    butEdidText= (Button) findViewById(R.id.butEdidText);
+    final DbHandler db=new DbHandler(getApplicationContext());
+    butEdidText.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Receiver r=new Receiver(1,txtMsg.getText().toString(),txtPhone.getText().toString()) ;
+if(db.getAllContacts().size()==0){
+
+
+            db.addContact(r);
+            Toast.makeText(getApplicationContext(),"data added",Toast.LENGTH_LONG).show();
+System.out.println(db.getContact(1).get_number());
+    switchButton.setEnabled(true);}
+            else {
+    db.updateContact(r);
+
+    Toast.makeText(getApplicationContext(),"data updated",Toast.LENGTH_LONG).show();
+}
+        }
+    });
+
+}
+
+    void loadData(){
+        DbHandler db=new DbHandler(getApplicationContext());
+        if(db.getAllContacts().size()!=0){
+            txtMsg.setText(db.getContact(1).get_sms());
+            txtPhone.setText(db.getContact(1).get_number());
+        }
+        else {
+            switchButton.setEnabled(false);
+            Toast.makeText(getApplicationContext(),"Please add your contact",Toast.LENGTH_LONG).show();
+        }
+    }
+    public void changeStatus(){
 
         MainActivity.this.switchButton.setOncheckListener(new Switch.OnCheckListener() {
             @Override
@@ -35,22 +83,5 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-      MyDBHandler db=new MyDBHandler(this);
-        Receiver r=new Receiver(1,"124455","hello");
-        db.addReceiver(r);
-        Receiver r2=new Receiver(1,"000000000","hello");
-        db.replace(r2);
-        EditText txtPhone= (EditText) findViewById(R.id.txtPhone);
-        txtPhone.setText(db.findReceiver().get_number());
-        butEdit= (Button) findViewById(R.id.butEdit);
-        butEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
     }
-
-
 }
