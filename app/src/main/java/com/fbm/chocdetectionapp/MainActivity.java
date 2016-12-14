@@ -1,5 +1,6 @@
 package com.fbm.chocdetectionapp;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     Button butEdit,butEdidText;
     EditText txtMsg;
     EditText txtPhone;
+    boolean msgSent=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -24,13 +26,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         txtMsg= (EditText) findViewById(R.id.txtMsg);
         butEdidText= (Button) findViewById(R.id.butEdidText);
+        butEdit= (Button) findViewById(R.id.butEdit);
         switchButton = (Switch) findViewById(R.id.switchView);
         txtPhone= (EditText) findViewById(R.id.txtPhone);
          ChangeData( );
         changeStatus();
         loadData();
 
+        FallHandler fl=new FallHandler(getApplicationContext());
+        Fall fall=new Fall(2,"test");
+        fl.addFall(fall);
+        System.out.println("your fall length is"+fl.getAllFalls().size());
 
+        butEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Controll.class);
+                startActivity(intent);
+            }
+        });
     }
 public void ChangeData(){
     txtMsg= (EditText) findViewById(R.id.txtMsg);
@@ -74,8 +88,11 @@ System.out.println(db.getContact(1).get_number());
             @Override
             public void onCheck(Switch aSwitch, boolean status) {
                 if (status) {
+                    if(msgSent==false){
                     sensorTask = new SensorTask(getApplicationContext());
                     sensorTask.execute();
+                    msgSent=true;}
+
 
                 } else {
                     sensorTask.cancel(true);

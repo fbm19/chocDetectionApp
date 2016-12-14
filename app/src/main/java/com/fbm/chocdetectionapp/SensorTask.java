@@ -16,10 +16,11 @@ import static android.content.Context.SENSOR_SERVICE;
  */
 
 public class SensorTask extends AsyncTask implements SensorEventListener {
-
+    boolean msgSent=false;
     private Context context;
     private SensorManager sensorManager;
     double ax, ay, az;   // these are the acceleration in x,y and z axis
+
 
     @Override
     protected Object doInBackground(Object[] objects) {
@@ -41,8 +42,12 @@ public class SensorTask extends AsyncTask implements SensorEventListener {
                 if(  (int)az==0){
                     System.out.println("here i am");
                     try {
+                        if(msgSent==false){
                         SmsManager smsManager = SmsManager.getDefault();
-                        smsManager.sendTextMessage("+21622914580", null, "test" , null, null);
+                        DbHandler db=new DbHandler(context);
+                        smsManager.sendTextMessage(  db.getContact(1).get_number(), null,   db.getContact(1).get_sms() , null, null);
+                        msgSent=true;}
+
                     }
                     catch (Exception myExp){
                         Log.e("No sold","No sold");
