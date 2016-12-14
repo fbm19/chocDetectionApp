@@ -1,4 +1,4 @@
-package com.fbm.chocdetectionapp;
+package com.fbm.chocdetectionapp.tn.enis.tasks;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -9,6 +9,9 @@ import android.os.AsyncTask;
 import android.telephony.SmsManager;
 import android.util.Log;
 
+import com.fbm.chocdetectionapp.tn.enis.services.DbHandler;
+import com.fbm.chocdetectionapp.tn.enis.services.GpsTracker;
+
 import static android.content.Context.SENSOR_SERVICE;
 
 /**
@@ -18,7 +21,7 @@ import static android.content.Context.SENSOR_SERVICE;
 public class SensorTask extends AsyncTask implements SensorEventListener {
 
     double ax, ay, az;   // these are the acceleration in x,y and z axis
-    boolean msgSent = false;
+
     private Context context;
     private SensorManager sensorManager;
 
@@ -44,28 +47,13 @@ public class SensorTask extends AsyncTask implements SensorEventListener {
                 ax = event.values[0];
                 ay = event.values[1];
                 az = event.values[2];
-                if ((int) az == 0) {
+                if ((int) az != 0) {
                     System.out.println("here i am");
-                    //  GpsTracker gpsTracker=new GpsTracker(context);
-                    // gpsTracker.getPosition();
-                    // System.out.println("u r link is "+gpsTracker.getPosition().getLat());
-                    //String linkMap="https://www.google.fr/maps/dir///@"+gpsTracker.getPosition().getLat()+","+gpsTracker.getPosition().getLon()+"z";
-                    // System.out.println("u r link is "+linkMap);
-                    try {
-                        if (this.msgSent == false) {
+                    GpsTracker gpsTracker=new GpsTracker(context);
+                    gpsTracker.getMyLocation();
 
 
-                            SmsManager smsManager = SmsManager.getDefault();
-                            DbHandler db = new DbHandler(context);
-                            // String msgContent=db.getContact(1).get_sms()+"The position is   "+linkMap;
-                            smsManager.sendTextMessage(db.getContact(1).get_number(), null, db.getContact(1).get_sms(), null, null);
-                            msgSent = true;
-                        }
 
-
-                    } catch (Exception myExp) {
-                        Log.e("No sold", "No sold");
-                    }
                 }
             }
         }

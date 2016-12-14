@@ -1,4 +1,4 @@
-package com.fbm.chocdetectionapp;
+package com.fbm.chocdetectionapp.tn.enis.model;
 
 /**
  * Created by tahta on 03/05/2016.

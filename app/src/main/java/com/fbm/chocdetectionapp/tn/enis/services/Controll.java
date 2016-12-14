@@ -1,8 +1,10 @@
-package com.fbm.chocdetectionapp;
+package com.fbm.chocdetectionapp.tn.enis.services;
 
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.fbm.chocdetectionapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +13,6 @@ import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.view.LineChartView;
-
-import static android.R.attr.type;
 
 public class Controll extends AppCompatActivity {
 
