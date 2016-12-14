@@ -1,4 +1,4 @@
-package com.fbm.chocdetectionapp;
+package com.fbm.chocdetectionapp.tn.enis.tn.enis.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.fbm.chocdetectionapp.tn.enis.services.DbHandler;
+import com.fbm.chocdetectionapp.R;
+import com.fbm.chocdetectionapp.tn.enis.model.Receiver;
+import com.fbm.chocdetectionapp.tn.enis.tasks.SensorTask;
 import com.gc.materialdesign.views.Switch;
 
 
