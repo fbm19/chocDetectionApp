@@ -47,7 +47,7 @@ public class SensorTask extends AsyncTask implements SensorEventListener {
                 ax = event.values[0];
                 ay = event.values[1];
                 az = event.values[2];
-                if ((int) az != 0) {
+                if ((int) az == 0) {
                     System.out.println("here i am");
                     GpsTracker gpsTracker=new GpsTracker(context);
                     gpsTracker.getMyLocation();
