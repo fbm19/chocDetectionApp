@@ -16,11 +16,15 @@ import static android.content.Context.SENSOR_SERVICE;
  */
 
 public class SensorTask extends AsyncTask implements SensorEventListener {
-    boolean msgSent=false;
+
+    double ax, ay, az;   // these are the acceleration in x,y and z axis
+    boolean msgSent = false;
     private Context context;
     private SensorManager sensorManager;
-    double ax, ay, az;   // these are the acceleration in x,y and z axis
 
+    public SensorTask(Context context) {
+        this.context = context;
+    }
 
     @Override
     protected Object doInBackground(Object[] objects) {
@@ -34,23 +38,33 @@ public class SensorTask extends AsyncTask implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+
         if (!this.isCancelled()) {
             if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
                 ax = event.values[0];
                 ay = event.values[1];
                 az = event.values[2];
-                if(  (int)az==0){
+                if ((int) az == 0) {
                     System.out.println("here i am");
+                    //  GpsTracker gpsTracker=new GpsTracker(context);
+                    // gpsTracker.getPosition();
+                    // System.out.println("u r link is "+gpsTracker.getPosition().getLat());
+                    //String linkMap="https://www.google.fr/maps/dir///@"+gpsTracker.getPosition().getLat()+","+gpsTracker.getPosition().getLon()+"z";
+                    // System.out.println("u r link is "+linkMap);
                     try {
-                        if(msgSent==false){
-                        SmsManager smsManager = SmsManager.getDefault();
-                        DbHandler db=new DbHandler(context);
-                        smsManager.sendTextMessage(  db.getContact(1).get_number(), null,   db.getContact(1).get_sms() , null, null);
-                        msgSent=true;}
+                        if (this.msgSent == false) {
 
-                    }
-                    catch (Exception myExp){
-                        Log.e("No sold","No sold");
+
+                            SmsManager smsManager = SmsManager.getDefault();
+                            DbHandler db = new DbHandler(context);
+                            // String msgContent=db.getContact(1).get_sms()+"The position is   "+linkMap;
+                            smsManager.sendTextMessage(db.getContact(1).get_number(), null, db.getContact(1).get_sms(), null, null);
+                            msgSent = true;
+                        }
+
+
+                    } catch (Exception myExp) {
+                        Log.e("No sold", "No sold");
                     }
                 }
             }
@@ -65,9 +79,5 @@ public class SensorTask extends AsyncTask implements SensorEventListener {
     @Override
     protected void onCancelled() {
 
-    }
-
-    public SensorTask(Context context) {
-        this.context = context;
     }
 }
